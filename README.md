@@ -1,142 +1,300 @@
-# Aqua Check: Tripura Aquifer Hydrogeological Radar 💧🗺️
+# Aqua Check 💧
 
-An interactive Groundwater & Pre-Drilling Hydrogeological Observatory for the State of Tripura, India. Designed for hydrogeologists, civil engineers, well drillers, and policymakers, Aqua Check maps telemetry stations across all 8 districts of Tripura, provides subsurface lithological diagnostics, calculates aquifer vulnerability scores, and generates pre-drilling advisories.
+### Tripura Aquifer Hydrogeological Radar
 
----
+**Aqua Check** is a groundwater intelligence and pre-drilling decision-support platform designed for Tripura, India.
 
-## 🌟 Key Features
+It combines an interactive GIS map, station-level groundwater data, hydrogeological risk scoring, multilingual analysis, and AI-assisted pre-drilling recommendations in a single web application.
 
-- **Interactive GIS Hydro-Radar**: Real-time Leaflet map displaying 118+ Central Ground Water Board (CGWB) monitoring and telemetry stations across all 8 districts of Tripura.
-- **District & Lithological Segmentation**: Full coverage for West Tripura, Sepahijala, Khowai, Gomati, South Tripura, Dhalai, Unakoti, and North Tripura, identifying Dupitila, Tipam, and Surma geological formations.
-- **Aquifer Vulnerability Speedometer**: Dynamic composite scoring index (0–100) assessing depth to water table, seasonal fluctuation, recharge potential, and extraction pressure.
-- **Pre-Drilling Technical Advisory**:
-  - Recommended drilling rig type (DTH Hammer, Rotary Mud, or Combination).
-  - Recommended borehole diameter and casing materials (UPVC / MS ERW).
-  - Target aquifer horizons and optimal slotted screen placement intervals.
-  - Iron / turbidity filtration and sanitary sealing requirements.
-  - Contractor inquiry checklist to protect landowners from dry wells and collapsed boreholes.
-- **Dual-Engine Advisory**:
-  - **Gemini AI Engine**: Contextual hydrogeological analysis powered by `@google/genai` (`gemini-2.5-flash`).
-  - **Deterministic CGWB Engine**: Instant, zero-latency in-browser hydrogeological calculation fallback for offline or static deployments.
-- **Trilingual Localization**: Complete interface and technical advisories available in English, Bengali (বাংলা), and Hindi (हिन्दी), including native numeral formatting.
-- **Regional Comparison & Analytics**: Comparative matrix ranking water tables, seasonal drawdowns, and extraction categories (Safe, Semi-Critical, Over-Exploited).
+[🌐 Live Demo](https://aqua-check-opal.vercel.app/)
 
 ---
 
-## 🛠️ Technology Stack
+## What Problem Does It Solve?
 
-- **Frontend**: React 19, TypeScript, Tailwind CSS v4, Motion (`motion/react`)
-- **Mapping & Spatial Visualization**: Leaflet, custom CartoDB & OpenStreetMap tile layers, SVG marker pins
-- **Icons**: `lucide-react`
-- **Backend**: Node.js, Express 4, `tsx`, `esbuild`
-- **AI / LLM Integration**: Google Gen AI SDK (`@google/genai`)
-- **Serverless / Cloud**: Vercel Serverless Function (`api/advisory.ts`) & Cloud Run full-stack container support
+Borewell drilling is often carried out with limited information about local groundwater conditions.
+
+Aqua Check is designed to provide a **pre-drilling information layer** before a borewell is planned by bringing together:
+
+- Groundwater depth information
+- Historical trend indicators
+- Geological / terrain information
+- Aquifer vulnerability scoring
+- Location-based station analysis
+- Drilling recommendations
+- AI-assisted hydrogeological explanations
+
+The goal is to help users make a more informed preliminary decision before commissioning detailed field investigation and drilling work.
 
 ---
 
-## 📁 Project Structure
+## Key Features
+
+### 🗺️ Interactive Hydrogeological Map
+
+An interactive Leaflet-based map displaying **118 station records** across Tripura.
+
+Users can:
+
+- Explore monitoring stations
+- Filter stations by district
+- Select individual stations
+- Inspect groundwater metrics
+- Drop a location pin
+- Find the nearest station
+- Switch map layers
+- View station-specific information
+
+### 📊 Groundwater Intelligence
+
+For each station, Aqua Check presents information such as:
+
+- Pre-monsoon depth to water level
+- Groundwater trend
+- Terrain / geological formation
+- Station type
+- Vulnerability score
+- Recommended target depth
+
+### ⚠️ Aquifer Vulnerability Scoring
+
+Aqua Check provides a **0–100 vulnerability score** and classifies the station into risk tiers.
+
+The score is intended as a project-level decision-support indicator based on the available station attributes and deterministic rules.
+
+### 🛠️ Pre-Drilling Advisory
+
+The platform generates preliminary recommendations covering:
+
+- Target drilling depth
+- Drilling method
+- Casing and screen considerations
+- Gravel packing
+- Sanitary sealing
+- Contractor questions
+- Basic water-quality considerations
+
+### 🤖 AI-Assisted Hydrogeological Advisory
+
+Aqua Check can use Google's Gemini API to generate contextual explanations based on the selected station.
+
+The API attempts multiple available Gemini model aliases and falls back to a deterministic hydrogeological rules engine when AI generation is unavailable.
+
+### 🌐 Trilingual Interface
+
+The application supports:
+
+- English
+- বাংলা
+- हिन्दी
+
+The language system covers both the interface and technical advisory content.
+
+### 🌓 Light / Dark Mode
+
+The interface includes a responsive light and dark theme.
+
+### 🖨️ Hydrogeological Report
+
+Users can generate a printable station report directly from the application.
+
+---
+
+## How It Works
 
 ```text
+User selects a location
+        ↓
+Station / nearest station identified
+        ↓
+Groundwater + terrain data loaded
+        ↓
+Vulnerability score calculated
+        ↓
+Deterministic hydrogeological analysis
+        ↓
+Optional Gemini AI analysis
+        ↓
+Pre-drilling advisory
+
+                    ┌──────────────────────┐
+                    │      Aqua Check      │
+                    │      React UI        │
+                    └──────────┬───────────┘
+                               │
+             ┌─────────────────┼─────────────────┐
+             │                 │                 │
+             ▼                 ▼                 ▼
+       Station Dataset      Leaflet Map      UI / i18n
+             │
+             ▼
+      Hydrogeological
+       Calculations
+             │
+             ▼
+       /api/advisory
+             │
+        ┌────┴────┐
+        │         │
+        ▼         ▼
+     Gemini    Deterministic
+       AI        Fallback
+
+Technology Stack
+Frontend
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS v4
+- Motion
+- Leaflet
+- Three.js
+- Lucide React
+Backend / API
+- Node.js
+- Express
+- TypeScript
+- tsx
+- esbuild
+AI
+- Google GenAI SDK (@google/genai)
+- Gemini API
+Deployment
+- Vercel
+- Vercel Serverless Function for /api/advisory
+
+Aqua_Check_/
+│
 ├── api/
-│   └── advisory.ts             # Vercel serverless function for Gemini advisories
-├── public/                     # Static assets and icons
+│   └── advisory.ts
+│
+├── public/
+│   └── ...
+│
 ├── src/
+│   ├── assets/
+│   │   └── images/
 │   ├── components/
-│   │   ├── HydroMap.tsx        # Leaflet hydrogeological map & station pins
-│   │   ├── LanguageModal.tsx   # Language selector modal (EN / BN / HI)
-│   │   ├── Navbar.tsx          # Navigation header, metrics, and live status
-│   │   ├── PreDrillingAdvisory.tsx # Drilling rig & casing recommendations
-│   │   ├── RegionalComparison.tsx  # District-level comparative table
-│   │   ├── SearchFilter.tsx    # Search, district filter, and status filters
-│   │   ├── StationDossier.tsx  # Station hydrogeological telemetry dossier
-│   │   └── VulnerabilitySpeedometer.tsx # Visual risk & vulnerability gauge
 │   ├── context/
-│   │   └── LanguageContext.tsx # React context for trilingual state
 │   ├── data/
-│   │   └── tripuraData.ts      # CGWB monitoring station dataset for Tripura
+│   │   └── tripuraData.ts
 │   ├── i18n/
-│   │   └── translations.ts     # Trilingual dictionary (EN, BN, HI)
-│   ├── types.ts                # TypeScript interfaces for stations and advisories
+│   │   └── translations.ts
 │   ├── utils/
-│   │   └── hydroLogic.ts       # Deterministic CGWB engineering rules engine
-│   ├── App.tsx                 # Main application dashboard
-│   ├── main.tsx                # React DOM root entry point
-│   └── index.css               # Global Tailwind CSS styles
-├── metadata.json               # Application metadata and capabilities
-├── package.json                # Project dependencies and build scripts
-├── server.ts                   # Express server with Vite middleware & Gemini API
-├── tsconfig.json               # TypeScript compiler configuration
-├── vercel.json                 # Vercel deployment routes and rewrites
-└── vite.config.ts              # Vite configuration with Tailwind CSS v4
-```
+│   │   └── advisoryGenerator.ts
+│   ├── App.tsx
+│   ├── main.tsx
+│   ├── index.css
+│   └── types.ts
+│
+├── index.html
+├── metadata.json
+├── package.json
+├── server.ts
+├── tsconfig.json
+├── vercel.json
+└── vite.config.ts
 
----
+Run Locally
+Prerequisites
+- Node.js 18+
+- npm
+1. Clone
+git clone https://github.com/koustavvd/Aqua_Check_.git
+cd Aqua_Check_
 
-## 🚀 Getting Started
+2. Install dependencies
+npm install
 
-### Prerequisites
+3. Configure Gemini
+Create a .env file:
+GEMINI_API_KEY=your_gemini_api_key
 
-- Node.js 18+ or 20+
-- npm, yarn, or pnpm
+The Gemini key is optional.
+Without it, the deterministic hydrogeological fallback remains available.
+4. Start development server
+npm run dev
 
-### Installation
+The local application runs on:
+http://localhost:3000
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/your-username/aqua-check-tripura.git
-   cd aqua-check-tripura
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Configure Environment Variables**:
-   Create a `.env` file in the project root:
-   ```env
-   # Optional: Google Gemini API Key for AI-generated advisories
-   GEMINI_API_KEY="your-gemini-api-key"
-   ```
-   *(Note: If `GEMINI_API_KEY` is not provided, the application seamlessly runs on the deterministic CGWB hydrogeological rules engine without errors).*
-
-4. **Start the Development Server**:
-   ```bash
-   npm run dev
-   ```
-   The app will run at `http://localhost:3000`.
-
----
-
-## 📦 Build & Deployment
-
-### Production Build
-```bash
+Production Build
 npm run build
-```
-This builds the client assets into `dist/` and bundles `server.ts` into a standalone CommonJS backend at `dist/server.cjs`.
 
-### Production Start
-```bash
-npm start
-```
+To preview the production build locally:
+npm run preview
 
-### Vercel Deployment
-Aqua Check includes out-of-the-box configuration for Vercel:
-- `vercel.json` maps `/api/*` requests to the serverless function in `api/advisory.ts` and routes all other traffic to the static SPA.
-- Set the `GEMINI_API_KEY` environment variable in your Vercel Project Settings for live AI advisories.
+Deploy on Vercel
+The project is configured for Vercel deployment.
+Recommended Vercel configuration
+Framework Preset: Vite
+Root Directory: ./
+Build Command: vite build
+Output Directory: dist
 
----
+For live Gemini-generated advisories, add:
+GEMINI_API_KEY
 
-## 📊 Data Sources & Reference Standards
+as a Vercel environment variable.
+The Vercel API endpoint is:
+/api/advisory
 
-- **Central Ground Water Board (CGWB)**, Ministry of Jal Shakti, Government of India.
-- **National Water Informatics Centre (NWIC)** — Dynamic Ground Water Resources of India.
-- **Tripura Water and Sanitation Support Organisation (WSSO)**, Drinking Water & Sanitation Department.
-- Standard specifications: IS 2800 (Code of practice for tube well construction) & IS 12818 (UPVC pipes for well casing).
+Data
+The application's station dataset is stored locally in:
+src/data/tripuraData.ts
 
----
+The interface uses station attributes including:
+- Location
+- District
+- Block
+- PIN code
+- Station type
+- Pre-monsoon water depth
+- Water-level trend
+- Terrain / formation
+- Risk score
+- Geographic coordinates
+Important Data Note
+This application should be treated as a demonstration and decision-support system.
+The embedded dataset and generated recommendations should not be interpreted as a substitute for:
+- Site-specific hydrogeological investigation
+- Geophysical surveying
+- Aquifer testing
+- Water-quality testing
+- Regulatory approval
+- Professional drilling design
+Actual borewell decisions should be validated using current field data and qualified hydrogeological / engineering assessment.
+Why Aqua Check?
+Aqua Check brings several pieces of information that are normally considered separately into one interface:
+Location
+   +
+Groundwater Data
+   +
+Geological Context
+   +
+Risk Scoring
+   +
+GIS Visualization
+   +
+AI Assistance
+   =
+Pre-Drilling Decision Support
 
-## 📄 License
+Current Scope
+The current version focuses on Tripura groundwater intelligence and station-based pre-drilling analysis.
+Future versions could include:
+- Live groundwater feeds
+- Expanded historical time-series data
+- Rainfall integration
+- Satellite / remote-sensing layers
+- More advanced aquifer modeling
+- Geophysical survey integration
+- User-generated site reports
+- Additional states and regions
+Live Demo
+🌐 https://aqua-check-opal.vercel.app/
+Repository
+💻 https://github.com/koustavvd/Aqua_Check_
 
-This project is open source and available under the [MIT License](LICENSE).
+
+Most importantly, I would **not claim that Aqua Check provides “real-time CGWB telemetry”** unless you actually have a live CGWB data connection. 
