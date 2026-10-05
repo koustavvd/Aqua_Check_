@@ -1,0 +1,10 @@
+{
+  "name": "Remix Remix Remix Aqua Check: Tripura Aquifer Hydrogeological Radar",
+  "description": "Tripura groundwater intelligence platform featuring CGWB telemetry stations, subsurface aquifer visualization, risk scorecards, and pre-drilling advisories.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

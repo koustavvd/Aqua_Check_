@@ -1,0 +1,187 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 3D Hydro Animations & Natural Water Flow */
+@keyframes waterWaveFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes waterDrift {
+  0% {
+    transform: translateX(0) translateZ(0);
+  }
+  50% {
+    transform: translateX(-15px) translateY(-3px) translateZ(5px);
+  }
+  100% {
+    transform: translateX(0) translateZ(0);
+  }
+}
+
+@keyframes causticPulse {
+  0%, 100% {
+    opacity: 0.25;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(1.04);
+  }
+}
+
+/* Water Cool Text Backing (Natural Aquatic Fluid Backdrop) */
+.water-text-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(224, 242, 254, 0.75) 0%, rgba(186, 230, 253, 0.5) 50%, rgba(240, 249, 255, 0.8) 100%);
+  border: 1px solid rgba(125, 211, 252, 0.45);
+  box-shadow: 0 4px 12px -2px rgba(14, 165, 233, 0.12), inset 0 1px 1px 0 rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.dark .water-text-badge {
+  background: linear-gradient(135deg, rgba(12, 74, 110, 0.5) 0%, rgba(8, 47, 73, 0.65) 50%, rgba(3, 105, 161, 0.4) 100%);
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 0 4px 14px -2px rgba(2, 132, 199, 0.25), inset 0 1px 1px 0 rgba(186, 230, 253, 0.2);
+}
+
+/* 3D Card Depth & Floating Hydro Sheen */
+.card-3d {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
+  box-shadow: 0 8px 24px -6px rgba(14, 165, 233, 0.12), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+}
+
+.card-3d:hover {
+  transform: translateY(-2px) translateZ(4px);
+  box-shadow: 0 16px 32px -8px rgba(14, 165, 233, 0.18), 0 4px 12px -2px rgba(15, 23, 42, 0.06);
+}
+
+.dark .card-3d {
+  box-shadow: 0 8px 28px -6px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(56, 189, 248, 0.12);
+}
+
+.dark .card-3d:hover {
+  box-shadow: 0 16px 36px -8px rgba(2, 132, 199, 0.25), 0 0 0 1px rgba(56, 189, 248, 0.3);
+}
+
+.card-3d-glass, .crystal-card {
+  position: relative;
+  transform-style: preserve-3d;
+  background-color: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 12px 36px -6px rgba(14, 165, 233, 0.12), inset 0 1px 2px 0 rgba(255, 255, 255, 0.95);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.card-3d-glass:hover, .crystal-card:hover {
+  transform: translateY(-2px) translateZ(4px);
+  background-color: rgba(255, 255, 255, 0.55);
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 18px 42px -8px rgba(14, 165, 233, 0.18), inset 0 1px 2px 0 rgba(255, 255, 255, 1);
+}
+
+.dark .card-3d-glass, .dark .crystal-card {
+  background-color: rgba(10, 22, 40, 0.38);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(56, 189, 248, 0.32);
+  box-shadow: 0 14px 38px -6px rgba(0, 0, 0, 0.4), inset 0 1px 2px 0 rgba(186, 230, 253, 0.25);
+}
+
+.dark .card-3d-glass:hover, .dark .crystal-card:hover {
+  background-color: rgba(12, 28, 52, 0.48);
+  border-color: rgba(56, 189, 248, 0.48);
+  box-shadow: 0 20px 48px -8px rgba(2, 132, 199, 0.28), inset 0 1px 2px 0 rgba(186, 230, 253, 0.35);
+}
+
+/* Crystal Sub-element Panels - replaces opaque nested boxes */
+.crystal-subcard {
+  background-color: rgba(255, 255, 255, 0.38);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 0.5rem;
+}
+
+.dark .crystal-subcard {
+  background-color: rgba(15, 23, 42, 0.28);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 0.5rem;
+}
+
+/* Crisp Text Protection - Prevents text clash over moving scenic backgrounds */
+.crystal-text-protect {
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
+}
+.dark .crystal-text-protect {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 0 8px rgba(10, 25, 47, 0.6);
+}
+
+/* Fluid Wave Contour Header Underlay */
+.water-contour-bg {
+  background-image: radial-gradient(circle at 50% 120%, rgba(14, 165, 233, 0.15), transparent 70%),
+                    linear-gradient(to right, rgba(56, 189, 248, 0.05), rgba(14, 165, 233, 0.12), rgba(56, 189, 248, 0.05));
+}
+
+.dark .water-contour-bg {
+  background-image: radial-gradient(circle at 50% 120%, rgba(14, 165, 233, 0.25), transparent 70%),
+                    linear-gradient(to right, rgba(3, 105, 161, 0.15), rgba(12, 74, 110, 0.25), rgba(3, 105, 161, 0.15));
+}
+
+/* Leaflet Custom Overrides for Clean Scientific Cartography */
+.leaflet-container {
+  font-family: inherit;
+  background-color: #f1f5f9;
+}
+
+.custom-station-pin {
+  background: transparent;
+  border: none;
+}
+
+.hydro-leaflet-tooltip {
+  background-color: rgba(255, 255, 255, 0.98);
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  color: #0f172a;
+}
+
+.dark .hydro-leaflet-tooltip {
+  background-color: rgba(15, 23, 42, 0.96);
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+/* Print Optimization */
+@media print {
+  header, .no-print, button, .leaflet-control-container, .water-surface-canvas, .tripura-heritage-bg {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .print-break-inside-avoid {
+    break-inside: avoid;
+  }
+}
+
